@@ -1,7 +1,12 @@
-import { greetUser } from '$utils/greet';
+import './index.css';
+
+import { svgComponent } from '$utils/svg';
+import { swiperHpInfo, swiperHpTestimonial, swiperHpZones } from '$utils/swiper';
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
-  const name = 'John Doe';
-  greetUser(name);
+  swiperHpZones();
+  svgComponent();
+  swiperHpInfo();
+  swiperHpTestimonial();
 });
