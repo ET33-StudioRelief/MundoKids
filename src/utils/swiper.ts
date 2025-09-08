@@ -1,4 +1,3 @@
-import 'swiper/css';
 import 'swiper/css/effect-fade';
 
 import Swiper from 'swiper';
@@ -12,10 +11,14 @@ export function swiperInfo() {
   }
   new Swiper('.swiper.is-info', {
     modules: [Navigation, Pagination],
+    direction: 'horizontal',
     slidesPerView: 'auto',
     spaceBetween: 50,
-    loop: true,
-    loopAdditionalSlides: 2,
+    rewind: true,
+    effect: 'slide',
+    speed: 800,
+    allowTouchMove: true,
+    grabCursor: true,
     navigation: {
       prevEl: '.swiper-button-prev.is-info',
       nextEl: '.swiper-button-next.is-info',
@@ -23,15 +26,10 @@ export function swiperInfo() {
     pagination: {
       el: '.swiper-pagination.is-info',
       clickable: true,
-      bulletClass: 'hp-bullet',
+      bulletClass: 'swiper-bullet',
       bulletActiveClass: 'is-active',
       renderBullet: (_, className) => `<span class="${className}"></span>`,
     },
-    allowTouchMove: true,
-    grabCursor: true,
-    width: 100,
-    effect: 'slide',
-    speed: 1000,
   });
 
   const equalizeInfoCardHeights = () => {
@@ -51,42 +49,6 @@ export function swiperInfo() {
   equalizeInfoCardHeights();
   window.addEventListener('resize', equalizeInfoCardHeights);
 }
-export function swiperHpTestimonial() {
-  const swiperElement = document.querySelector('.swiper.is-hp-testimonial');
-
-  if (!swiperElement) {
-    return;
-  }
-  new Swiper('.swiper.is-hp-testimonial', {
-    modules: [Autoplay, Navigation, Pagination],
-    slidesPerView: 'auto',
-    spaceBetween: 48,
-    centeredSlides: true,
-    centeredSlidesBounds: true, // utile avec slidesPerView: 'auto'
-    loop: true,
-    loopAdditionalSlides: 6,
-    autoplay: {
-      delay: 1000,
-      disableOnInteraction: false,
-    },
-    navigation: {
-      prevEl: '.swiper-button-prev.is-hp-testimonial',
-      nextEl: '.swiper-button-next.is-hp-testimonial',
-    },
-    pagination: {
-      el: '.swiper-pagination.is-hp-testimonial',
-      clickable: true,
-      bulletClass: 'hp-bullet',
-      bulletActiveClass: 'is-active',
-      renderBullet: (_, className) => `<span class="${className}"></span>`,
-    },
-    allowTouchMove: true,
-    grabCursor: true,
-    width: 300,
-    effect: 'slide',
-    speed: 1000,
-  });
-}
 
 export function swiperZones() {
   const swiperElement = document.querySelector('.swiper.is-zones');
@@ -94,48 +56,33 @@ export function swiperZones() {
   if (!swiperElement) {
     return;
   }
-
-  // Vérifier que l'élément a bien la structure Swiper
-  const wrapper = swiperElement.querySelector('.swiper-wrapper');
-  const slides = swiperElement.querySelectorAll('.swiper-slide');
-
-  if (!wrapper || slides.length === 0) {
-    return;
-  }
-
-  // Vérifier si Swiper est déjà initialisé
-  if (swiperElement.classList.contains('swiper-initialized')) {
-    return;
-  }
-
   new Swiper('.swiper.is-zones', {
     modules: [Autoplay, Navigation, Pagination],
+    direction: 'horizontal',
     slidesPerView: 'auto',
     spaceBetween: 48,
-    centeredSlides: true,
-    centeredSlidesBounds: true, // utile avec slidesPerView: 'auto'
-    loop: true,
-    loopAdditionalSlides: 6,
-    autoplay: {
-      delay: 1000,
-      disableOnInteraction: false,
-    },
-    navigation: {
-      prevEl: '.swiper-button-prev.is-zones',
-      nextEl: '.swiper-button-next.is-zones',
-    },
+    rewind: true,
+    effect: 'slide',
+    speed: 800,
+    autoplay: { delay: 1000, disableOnInteraction: false },
+    navigation: { prevEl: '.swiper-button-prev.is-zones', nextEl: '.swiper-button-next.is-zones' },
     pagination: {
       el: '.swiper-pagination.is-zones',
       clickable: true,
-      bulletClass: 'hp-bullet',
+      bulletClass: 'swiper-bullet',
       bulletActiveClass: 'is-active',
-      renderBullet: (_, className) => `<span class="${className}"></span>`,
+      renderBullet: (_, c) => `<span class="${c}"></span>`,
     },
-    allowTouchMove: true,
-    grabCursor: true,
-    width: 300,
-    effect: 'slide',
-    speed: 1000,
+    breakpoints: {
+      // Paramètres pour les tablettes
+      768: {
+        slidesPerGroup: 2,
+      },
+      // Paramètres pour les téléphones
+      0: {
+        slidesPerGroup: 1,
+      },
+    },
   });
 }
 export function swiperUnivers() {
@@ -160,10 +107,37 @@ export function swiperUnivers() {
     pagination: {
       el: '.swiper-pagination.is-univers',
       clickable: true,
-      bulletClass: 'hp-bullet',
+      bulletClass: 'swiper-bullet',
       bulletActiveClass: 'is-active',
       renderBullet: (_, className) => `<span class="${className}"></span>`,
     },
-    speed: 1000,
+    speed: 800,
+  });
+}
+export function swiperTest() {
+  const swiperElement = document.querySelector('.swiper.is-test');
+
+  if (!swiperElement) {
+    return;
+  }
+  new Swiper('.swiper.is-test', {
+    modules: [Navigation, Pagination],
+    direction: 'horizontal',
+    slidesPerView: 'auto',
+    spaceBetween: 50,
+    rewind: true,
+    effect: 'slide',
+    speed: 800,
+    navigation: {
+      prevEl: '.swiper-button-prev.is-test',
+      nextEl: '.swiper-button-next.is-test',
+    },
+    pagination: {
+      el: '.swiper-pagination.is-test',
+      clickable: true,
+      bulletClass: 'swiper-bullet',
+      bulletActiveClass: 'is-active',
+      renderBullet: (_, className) => `<span class="${className}"></span>`,
+    },
   });
 }

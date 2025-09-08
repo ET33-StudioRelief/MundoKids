@@ -1,4 +1,4 @@
-.hp-bullet {
+.swiper-bullet {
   width: 0.75rem;
   height: 0.375rem;
   border: 1px solid #fff;
@@ -7,7 +7,7 @@
   margin: 0 6px;
 }
 
-.hp-bullet.is-active {
+.swiper-bullet.is-active {
   background: #3dd8fc;
   border: 1px solid #3dd8fc;
 }
@@ -15,4 +15,13 @@
 #form-objet {
   color: rgba(255, 255, 255, 0.75) !important;
   font-size: 1rem;
+}
+
+/* Hover micro-anim on zones cards */
+.cc--hp-zones_card p {
+  transition: color 200ms ease;
+}
+
+.cc--hp-zones_card:hover p {
+  color: var(--_brand---action--hover-text);
 }
