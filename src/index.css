@@ -40,7 +40,6 @@
   }
 }
 
-
 /*Swiper*/
 .swiper-bullet {
   width: 0.75rem;
@@ -98,6 +97,6 @@
 }
 /*FAQ*/
 /* decalage des items impairs */
-.faq_flexbox.w-dyn-items > [role="listitem"]:nth-child(2n + 1) {
+.faq_flexbox.w-dyn-items > [role='listitem']:nth-child(2n + 1) {
   transform: translateY(2.5rem);
 }
