@@ -32,14 +32,6 @@
   animation: neonGlow 2s infinite alternate;
 }
 
-/*Navbar*/
-@media (min-width: 992px) and (max-width: 1350px) {
-  .navbar_menu.is-page-height-tablet {
-    gap: 1rem;
-    padding-left: 1rem;
-  }
-}
-
 /*Swiper*/
 .swiper-bullet {
   width: 0.75rem;
@@ -61,16 +53,32 @@
   font-size: 1rem;
 }
 
-/* Hover micro-anim on zones cards */
+/* Hover micro-anim - homepage zones */
 .cc--hp-zones_card p {
   transition: color 200ms ease;
 }
 .cc--hp-zones_card:hover p {
   color: var(--_brand---action--hover-text);
 }
+/*---------------COMPONENTS-------------*/
+/*CC--Navbar*/
+@media (min-width: 992px) and (max-width: 1350px) {
+  .navbar_menu.is-page-height-tablet {
+    gap: 1rem;
+    padding-left: 1rem;
+  }
+}
+/* CC--LAYOUT 2 COL*/
+.layout-2-col_content.w-variant-eba1d31c-f8cb-455f-b012-2fc1bee97362 > :nth-child(1) {
+  grid-column: 2;
+  grid-row: 1;
+}
+.layout-2-col_content.w-variant-eba1d31c-f8cb-455f-b012-2fc1bee97362 > :nth-child(2) {
+  grid-column: 1;
+  grid-row: 1;
+}
 
-/*INFO CARDS*/
-/* Méthode 1: Border gradient avec pseudo-élément (Recommandée) */
+/*CC--INFO CARD | border gradient*/
 .cc--info-card {
   position: relative;
 }
@@ -95,8 +103,11 @@
   mask-composite: exclude;
   z-index: -1;
 }
+
 /*FAQ*/
 /* decalage des items impairs */
-.faq_flexbox.w-dyn-items > [role='listitem']:nth-child(2n + 1) {
-  transform: translateY(2.5rem);
+@media (min-width: 992px) {
+  .faq_flexbox.w-dyn-items > [role='listitem']:nth-child(2n + 1) {
+    transform: translateY(2.5rem);
+  }
 }

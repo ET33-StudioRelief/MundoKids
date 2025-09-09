@@ -54,3 +54,33 @@ export function initGsapCardsAnimation() {
     },
   });
 }
+
+export function initIntroDecorativAnimation() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  ScrollTrigger.matchMedia({
+    '(min-width: 992px)': () => {
+      const el = document.querySelector<HTMLElement>('.decorativ_btm-grid');
+      const trigger = document.querySelector<HTMLElement>('.section_intro');
+      if (!el || !trigger) return;
+
+      gsap.set(el, { y: 0 });
+
+      gsap.to(el, {
+        y: '-5rem',
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger,
+          start: 'top bottom',
+          end: 'top top',
+          scrub: true,
+          markers: true,
+        },
+      });
+
+      return () => {
+        // cleanup auto via matchMedia
+      };
+    },
+  });
+}
