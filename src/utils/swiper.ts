@@ -94,6 +94,7 @@ export function swiperUnivers() {
   new Swiper('.swiper.is-univers', {
     modules: [Navigation, Pagination, EffectFade],
     loop: true,
+    speed: 800,
     effect: 'fade',
     fadeEffect: {
       crossFade: true,
@@ -111,16 +112,15 @@ export function swiperUnivers() {
       bulletActiveClass: 'is-active',
       renderBullet: (_, className) => `<span class="${className}"></span>`,
     },
-    speed: 800,
   });
 }
 export function swiperTest() {
-  const swiperElement = document.querySelector('.swiper.is-test');
+  const swiperElement = document.querySelector('.swiper.is-testimonial');
 
   if (!swiperElement) {
     return;
   }
-  new Swiper('.swiper.is-test', {
+  new Swiper('.swiper.is-testimonial', {
     modules: [Navigation, Pagination],
     direction: 'horizontal',
     slidesPerView: 'auto',
@@ -129,11 +129,11 @@ export function swiperTest() {
     effect: 'slide',
     speed: 800,
     navigation: {
-      prevEl: '.swiper-button-prev.is-test',
-      nextEl: '.swiper-button-next.is-test',
+      prevEl: '.swiper-button-prev.is-testimonial',
+      nextEl: '.swiper-button-next.is-testimonial',
     },
     pagination: {
-      el: '.swiper-pagination.is-test',
+      el: '.swiper-pagination.is-testimonial',
       clickable: true,
       bulletClass: 'swiper-bullet',
       bulletActiveClass: 'is-active',
