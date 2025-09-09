@@ -61,7 +61,7 @@ export function swiperZones() {
     direction: 'horizontal',
     slidesPerView: 'auto',
     spaceBetween: 48,
-    rewind: true,
+    loop: true,
     effect: 'slide',
     speed: 800,
     autoplay: { delay: 1000, disableOnInteraction: false },

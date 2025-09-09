@@ -32,6 +32,15 @@
   animation: neonGlow 2s infinite alternate;
 }
 
+/*Navbar*/
+@media (min-width: 992px) and (max-width: 1350px) {
+  .navbar_menu.is-page-height-tablet {
+    gap: 1rem;
+    padding-left: 1rem;
+  }
+}
+
+
 /*Swiper*/
 .swiper-bullet {
   width: 0.75rem;
@@ -86,4 +95,9 @@
     linear-gradient(#fff 0 0);
   mask-composite: exclude;
   z-index: -1;
+}
+/*FAQ*/
+/* decalage des items impairs */
+.faq_flexbox.w-dyn-items > [role="listitem"]:nth-child(2n + 1) {
+  transform: translateY(2.5rem);
 }
