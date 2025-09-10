@@ -1,5 +1,7 @@
 /*General Style*/
-[data-neon='title'] {
+/*[data-neon='title']*/
+h1,
+h2 {
   text-shadow:
     0 0 10px #fa6a10,
     0 0 15px #fa6a10,
@@ -30,6 +32,56 @@
 .span_purple-shadow {
   color: #fff;
   animation: neonGlow 2s infinite alternate;
+}
+
+/*BORDER BLUR*/
+.is-border-purple,
+.is-border-orange,
+.is-border-blue,
+.is-border-green {
+  position: relative;
+}
+
+.is-border-purple::before,
+.is-border-orange::before,
+.is-border-blue::before,
+.is-border-green::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: transparent;
+  border-radius: calc(var(--radius--medium) + 2px);
+  z-index: -1;
+  filter: blur(1px);
+}
+.is-border-purple::before {
+  box-shadow:
+    inset 0 0 0 2px var(--_brand---border--neon-purple),
+    0 0 20px 2px var(--swatch--light-purple-600),
+    0 0 40px 4px var(--swatch--light-purple-600);
+}
+.is-border-orange::before {
+  box-shadow:
+    inset 0 0 0 2px var(--_brand---border--neon-orange),
+    0 0 20px 2px var(--swatch--orange-900),
+    0 0 40px 4px var(--swatch--orange-900);
+}
+
+.is-border-blue::before {
+  box-shadow:
+    inset 0 0 0 2px var(--_brand---border--neon-blue),
+    0 0 20px 2px var(--swatch--blue-900),
+    0 0 40px 4px var(--swatch--blue-900);
+}
+
+.is-border-green::before {
+  box-shadow:
+    inset 0 0 0 2px var(--_brand---border--neon-green),
+    0 0 20px 2px var(--swatch--green-900),
+    0 0 40px 4px var(--swatch--green-900);
 }
 
 /*Swiper*/
