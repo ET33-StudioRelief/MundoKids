@@ -68,15 +68,6 @@
     padding-left: 1rem;
   }
 }
-/* CC--LAYOUT 2 COL*/
-.layout-2-col_content.w-variant-eba1d31c-f8cb-455f-b012-2fc1bee97362 > :nth-child(1) {
-  grid-column: 2;
-  grid-row: 1;
-}
-.layout-2-col_content.w-variant-eba1d31c-f8cb-455f-b012-2fc1bee97362 > :nth-child(2) {
-  grid-column: 1;
-  grid-row: 1;
-}
 
 /*CC--INFO CARD | border gradient*/
 .cc--info-card {

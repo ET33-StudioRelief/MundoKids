@@ -13,7 +13,7 @@ export function swiperInfo() {
     modules: [Navigation, Pagination],
     direction: 'horizontal',
     slidesPerView: 'auto',
-    spaceBetween: 50,
+    spaceBetween: 48,
     rewind: true,
     effect: 'slide',
     speed: 800,
@@ -85,6 +85,34 @@ export function swiperZones() {
     },
   });
 }
+
+export function swiperTestimonial() {
+  const swiperElement = document.querySelector('.swiper.is-testimonial');
+  if (!swiperElement) {
+    return;
+  }
+  new Swiper('.swiper.is-testimonial', {
+    modules: [Autoplay, Navigation, Pagination],
+    direction: 'horizontal',
+    slidesPerView: 'auto',
+    spaceBetween: 48,
+    speed: 800,
+    effect: 'slide',
+    loop: true,
+    autoplay: { delay: 1000, disableOnInteraction: false },
+    navigation: {
+      prevEl: '.swiper-button-prev.is-testimonial',
+      nextEl: '.swiper-button-next.is-testimonial',
+    },
+    pagination: {
+      el: '.swiper-pagination.is-testimonial',
+      clickable: true,
+      bulletClass: 'swiper-bullet',
+      bulletActiveClass: 'is-active',
+      renderBullet: (_, className) => `<span class="${className}"></span>`,
+    },
+  });
+}
 export function swiperUnivers() {
   const swiperElement = document.querySelector('.swiper.is-univers');
 
@@ -107,33 +135,6 @@ export function swiperUnivers() {
     },
     pagination: {
       el: '.swiper-pagination.is-univers',
-      clickable: true,
-      bulletClass: 'swiper-bullet',
-      bulletActiveClass: 'is-active',
-      renderBullet: (_, className) => `<span class="${className}"></span>`,
-    },
-  });
-}
-export function swiperTest() {
-  const swiperElement = document.querySelector('.swiper.is-testimonial');
-
-  if (!swiperElement) {
-    return;
-  }
-  new Swiper('.swiper.is-testimonial', {
-    modules: [Navigation, Pagination],
-    direction: 'horizontal',
-    slidesPerView: 'auto',
-    spaceBetween: 50,
-    rewind: true,
-    effect: 'slide',
-    speed: 800,
-    navigation: {
-      prevEl: '.swiper-button-prev.is-testimonial',
-      nextEl: '.swiper-button-next.is-testimonial',
-    },
-    pagination: {
-      el: '.swiper-pagination.is-testimonial',
       clickable: true,
       bulletClass: 'swiper-bullet',
       bulletActiveClass: 'is-active',
