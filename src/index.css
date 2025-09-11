@@ -197,3 +197,25 @@ h2 {
   align-items: center;
   justify-content: center;
 }
+
+/* Desktop (par défaut) → alignement horizontal déjà en place */
+
+/* Mobile: pile en colonne, centre les éléments */
+@media (max-width: 767px) {
+  .animation-container {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+  .animation-container .step {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    gap: 24px;
+    padding-inline: 16px;
+    max-height: 50vh !important;
+    margin-top: auto !important;
+    margin-bottom: auto !important;
+  }
+}
