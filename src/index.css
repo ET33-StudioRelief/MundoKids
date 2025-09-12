@@ -35,7 +35,7 @@ h2 {
 }
 
 /*BORDER BLUR*/
-.is-border-purple,
+/*.is-border-purple,
 .is-border-orange,
 .is-border-blue,
 .is-border-green {
@@ -81,7 +81,7 @@ h2 {
     inset 0 0 0 2px var(--_brand---border--neon-green),
     0 0 20px 2px var(--swatch--green-900),
     0 0 40px 4px var(--swatch--green-900);
-}
+}*/
 
 /*Swiper*/
 .swiper-bullet {
@@ -232,3 +232,19 @@ h2 {
   }
 }
 
+/*Swiper fade*/
+/* Garantit l’opacité/transition du fade sans CSS Swiper */
+.swiper.is-univers .swiper-slide {
+  opacity: 0;
+  transition: opacity 800ms ease; /* même durée que speed: 800 */
+}
+
+.swiper.is-univers .swiper-slide.swiper-slide-visible,
+.swiper.is-univers .swiper-slide.swiper-slide-active {
+  opacity: 1;
+}
+
+/* Évite qu’un slide caché prenne la place */
+.swiper.is-univers .swiper-wrapper {
+  backface-visibility: hidden;
+}

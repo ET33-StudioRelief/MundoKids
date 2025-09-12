@@ -1,5 +1,3 @@
-import 'swiper/css/effect-fade';
-
 import Swiper from 'swiper';
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
 
@@ -123,11 +121,7 @@ export function swiperUnivers() {
     modules: [Navigation, Pagination, EffectFade],
     loop: true,
     speed: 800,
-    effect: 'fade',
-    fadeEffect: {
-      crossFade: true,
-    },
-    slidesPerView: 1,
+    slidesPerView: 'auto',
     spaceBetween: 0,
     navigation: {
       prevEl: '.swiper-button-prev.is-univers',
