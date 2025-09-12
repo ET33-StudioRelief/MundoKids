@@ -5,6 +5,26 @@ export function initStepAnimation(): void {
   const steps = Array.from(document.querySelectorAll<HTMLElement>('.animation-container .step'));
   if (!container || steps.length === 0) return;
 
+  // Calcule et applique l'offset haut (pour ne pas chevaucher le heading)
+  const heading = container.querySelector('.container-large') as HTMLElement | null;
+  const setStepsTopOffset = (): void => {
+    const h = heading ? heading.getBoundingClientRect().height : 0;
+    container.style.setProperty('--steps-top-base', `${Math.round(h)}px`);
+  };
+  setStepsTopOffset();
+  if (typeof ResizeObserver !== 'undefined' && heading) {
+    const ro = new ResizeObserver(() => setStepsTopOffset());
+    ro.observe(heading);
+  }
+  window.addEventListener(
+    'resize',
+    () => {
+      setStepsTopOffset();
+      ScrollTrigger.refresh();
+    },
+    { passive: true }
+  );
+
   const mm = gsap.matchMedia();
 
   mm.add(
