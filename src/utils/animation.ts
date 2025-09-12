@@ -21,9 +21,10 @@ export function initStepAnimation(): void {
       showStep(steps[current], true, isMobile);
 
       // pin + progression
+      const pinOffset = 80; // offset en px sous le haut du viewport
       ScrollTrigger.create({
         trigger: container,
-        start: 'top top',
+        start: () => `top top+=${pinOffset}`,
         end: `+=${(steps.length - 1) * 100}%`,
         pin: true,
         scrub: 1,
