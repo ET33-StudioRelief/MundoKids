@@ -183,22 +183,33 @@ h2 {
   opacity: 1;
 }
 
-/*sticky animation hp*/
+/*STICKY ANIMATION HP*/
 .animation-container {
   position: relative;
   height: 100vh;
   overflow: hidden;
+  --steps-extra: 8px;
 }
 
 .animation-container .step {
   position: absolute;
-  inset: 0;
+  left: 0;
+  right: 0;
+  /* par défaut, on utilise l'inset basé heading + gap */
+  inset: calc(var(--steps-top-base, 0px) + var(--steps-extra, 0px)) 0 0 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Desktop (par défaut) → alignement horizontal déjà en place */
+/* Desktop: centre strictement au milieu du viewport */
+@media (min-width: 768px) {
+  .animation-container .step {
+    inset: auto 0 auto 0; /* on ignore l'inset top basé heading */
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
 
 /* Mobile: pile en colonne, centre les éléments */
 @media (max-width: 767px) {
@@ -206,10 +217,11 @@ h2 {
     height: 100vh;
     overflow: hidden;
     position: relative;
+    --steps-extra: 32px;
   }
   .animation-container .step {
     position: absolute;
-    inset: 0;
+    inset: calc(var(--steps-top-base, 0px) + var(--steps-extra, 0px)) 0 0 0;
     display: grid;
     place-items: center;
     gap: 24px;
@@ -219,3 +231,4 @@ h2 {
     margin-bottom: auto !important;
   }
 }
+
