@@ -86,21 +86,19 @@ export function initStepAnimation(): void {
   const steps = Array.from(document.querySelectorAll<HTMLElement>('.animation-container .step'));
   if (!container || steps.length === 0) return;
 
-  // État initial: tout caché
+  // Initial
   steps.forEach((s) => gsap.set(s, { autoAlpha: 0, pointerEvents: 'none' }));
 
-  // Affiche la première
+  // Show first step
   let current = 0;
   showStep(steps[current], true);
-
-  // ScrollTrigger unique qui “pin” la scène
   ScrollTrigger.create({
     trigger: container,
-    start: 'top top',
-    end: '+=300%', // 4 steps => 3 écrans de transitions
+    start: () => `top top`,
+    end: '+=300%',
     pin: true,
     scrub: 1,
-    markers: true,
+    anticipatePin: 1,
     onUpdate: (self) => {
       const idx = Math.min(steps.length - 1, Math.floor(self.progress * steps.length));
       if (idx !== current) {
