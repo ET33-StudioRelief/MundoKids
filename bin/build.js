@@ -40,6 +40,7 @@ else {
   await context
     .serve({
       servedir: BUILD_DIRECTORY,
+      host: '0.0.0.0',
       port: SERVE_PORT,
     })
     .then(logServedFiles);

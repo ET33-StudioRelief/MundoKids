@@ -97,12 +97,17 @@ export function initStepAnimation(): void {
   ScrollTrigger.create({
     trigger: container,
     start: 'top top',
-    end: '+=300%', // 4 steps => 3 écrans de transitions
+    end: () => `+=${Math.max(0, steps.length - 1) * window.innerHeight}`,
     pin: true,
-    scrub: 1,
-    markers: true,
+    pinSpacing: true,
+    pinType: ScrollTrigger.isTouch ? 'transform' : 'fixed',
+    anticipatePin: 1,
+    scrub: 0.6,
+    markers: false,
+    invalidateOnRefresh: true,
     onUpdate: (self) => {
-      const idx = Math.min(steps.length - 1, Math.floor(self.progress * steps.length));
+      const maxIndex = Math.max(0, steps.length - 1);
+      const idx = Math.min(maxIndex, Math.round(self.progress * maxIndex));
       if (idx !== current) {
         hideStep(steps[current]);
         showStep(steps[idx]);
@@ -110,6 +115,11 @@ export function initStepAnimation(): void {
       }
     },
   });
+
+  // Refresh sur resize/orientation pour recalculer la durée et fiabiliser iOS
+  const refreshHandler = () => ScrollTrigger.refresh();
+  window.addEventListener('resize', refreshHandler, { passive: true });
+  window.addEventListener('orientationchange', refreshHandler, { passive: true });
 }
 
 function showStep(step: HTMLElement, immediate = false): void {
