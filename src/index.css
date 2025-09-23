@@ -236,3 +236,23 @@ h2 {
 .swiper.is-univers .swiper-wrapper {
   backface-visibility: hidden;
 }
+
+/*ANIMATION STEPS*/
+/* Optimisations GPU pour les animations de steps */
+.animation-container .step {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.animation-container .step .xp_text-step,
+.animation-container .step .xp_img-col,
+.animation-container .step .text-left,
+.animation-container .step .text-right,
+.animation-container .step .image-center {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
