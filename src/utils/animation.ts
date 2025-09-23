@@ -21,7 +21,9 @@ export function initStepAnimation(): void {
   const setStepsTopOffset = (): void => {
     if (heading) {
       const h = heading.getBoundingClientRect().height;
-      container.style.setProperty('--steps-top-base', `${Math.round(h)}px`);
+      const offsetValue = `${Math.round(h)}px`;
+      container.style.setProperty('--steps-top-base', offsetValue);
+      console.error('Mobile offset calculé:', offsetValue, 'pour heading:', heading);
     }
   };
 
