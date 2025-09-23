@@ -3,7 +3,6 @@ import './index.css';
 import { initAccordionToggle } from '$utils/accordion';
 import { initStepAnimation } from '$utils/animation';
 import { initGsapCardsAnimation, initIntroDecorativAnimation } from '$utils/gsap';
-import { ScrollTrigger } from '$utils/gsapSetup';
 import { svgComponent } from '$utils/svg';
 import { swiperInfo, swiperTestimonial, swiperUnivers, swiperZones } from '$utils/swiper';
 
@@ -15,8 +14,7 @@ window.Webflow.push(() => {
   const hasAnim = document.querySelector('.animation-container');
   if (hasAnim) {
     initStepAnimation();
-    setTimeout(() => ScrollTrigger.refresh(), 0);
-    window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
+    // Le refresh est maintenant géré dans animation.ts pour éviter les conflits
   }
 
   if (window.location.pathname === '/') {
