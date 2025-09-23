@@ -5,61 +5,48 @@ export function initStepAnimation(): void {
   const steps = Array.from(document.querySelectorAll<HTMLElement>('.animation-container .step'));
   if (!container || steps.length === 0) return;
 
-  // Fonction pour détecter si on est vraiment sur mobile
-  const isMobileDevice = (): boolean => {
-    return (
-      window.innerWidth <= 768 ||
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-    );
-  };
-
   // Calcule et applique l'offset haut (pour ne pas chevaucher le heading)
-  const isMobile = isMobileDevice();
-  const heading = isMobile
-    ? (container.querySelector('.step') as HTMLElement | null)
-    : (document.querySelector('#test-anim-heading') as HTMLElement | null);
+  const heading = document.querySelector('#test-anim-heading') as HTMLElement | null;
+  let lastOffsetValue = '';
   const setStepsTopOffset = (): void => {
     if (heading) {
       const h = heading.getBoundingClientRect().height;
       const offsetValue = `${Math.round(h)}px`;
-      container.style.setProperty('--steps-top-base', offsetValue);
-      console.error('Mobile offset calculé:', offsetValue, 'pour heading:', heading);
+      // Éviter les appels multiples si la valeur n'a pas changé
+      if (offsetValue !== lastOffsetValue) {
+        container.style.setProperty('--steps-top-base', offsetValue);
+        lastOffsetValue = offsetValue;
+      }
     }
   };
 
-  // Initialisation différée pour éviter les problèmes de timing
-  const initAnimation = (): void => {
+  const initDesktopAnimation = (): void => {
     setStepsTopOffset();
-    const isMobile = isMobileDevice();
 
     // Reset complet
     steps.forEach((s) => gsap.set(s, { autoAlpha: 0, pointerEvents: 'none' }));
     let current = 0;
-    showStep(steps[current], true, isMobile);
 
-    // Configuration différente pour mobile vs desktop
-    const pinOffset = isMobile ? 60 : 80;
-    const endValue = isMobile ? `+=${(steps.length - 1) * 80}%` : `+=${(steps.length - 1) * 100}%`;
+    showStep(steps[current], true);
 
     ScrollTrigger.create({
       trigger: container,
-      start: `top top+=${pinOffset}`,
-      end: endValue,
+      start: 'top top+=80',
+      end: `+=${(steps.length - 1) * 100}%`,
       pin: true,
-      scrub: 1,
-      anticipatePin: isMobile ? 0 : 1, // Désactive anticipatePin sur mobile
+      scrub: 0.5,
+      anticipatePin: 1,
       invalidateOnRefresh: true,
-      refreshPriority: -1, // Priorité plus basse pour éviter les conflits
+      refreshPriority: -1,
       onUpdate: (self) => {
         const idx = Math.min(steps.length - 1, Math.floor(self.progress * steps.length));
         if (idx !== current) {
-          hideStep(steps[current], isMobile);
-          showStep(steps[idx], false, isMobile);
+          hideStep(steps[current]);
+          showStep(steps[idx], false);
           current = idx;
         }
       },
       onRefresh: () => {
-        // Recalculer les offsets après refresh
         setStepsTopOffset();
       },
     });
@@ -67,10 +54,9 @@ export function initStepAnimation(): void {
 
   // Attendre que tout soit chargé avant d'initialiser
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initAnimation);
+    document.addEventListener('DOMContentLoaded', initDesktopAnimation);
   } else {
-    // Petit délai pour s'assurer que les éléments sont bien rendus
-    setTimeout(initAnimation, 100);
+    setTimeout(initDesktopAnimation, 100);
   }
 
   // ResizeObserver avec debounce pour éviter trop de recalculs
@@ -81,7 +67,7 @@ export function initStepAnimation(): void {
       resizeTimeout = setTimeout(() => {
         setStepsTopOffset();
         ScrollTrigger.refresh();
-      }, 150);
+      }, 300);
     });
     ro.observe(heading);
   }
@@ -94,14 +80,18 @@ export function initStepAnimation(): void {
       resizeTimeout = setTimeout(() => {
         setStepsTopOffset();
         ScrollTrigger.refresh();
-      }, 150);
+      }, 300);
     },
     { passive: true }
   );
 }
 
-function showStep(step: HTMLElement, immediate: boolean, isMobile: boolean): void {
-  const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+function showStep(step: HTMLElement, immediate: boolean): void {
+  const tl = gsap.timeline({
+    defaults: { ease: 'power2.out' },
+    immediateRender: false,
+  });
+
   tl.set(step, { pointerEvents: 'auto' });
   tl.to(step, { autoAlpha: 1, duration: immediate ? 0 : 0.2 }, 0);
 
@@ -109,56 +99,52 @@ function showStep(step: HTMLElement, immediate: boolean, isMobile: boolean): voi
   const image = step.querySelector('.image-center, .xp_img-col');
   const right = step.querySelector('.text-right, .xp_text-step.is-right');
 
-  // Animations adaptées pour mobile
   if (left) {
-    const fromProps = isMobile
-      ? { x: -30, opacity: 0 } // Réduit le déplacement sur mobile
-      : { y: 60, opacity: 0 };
-    tl.fromTo(left, fromProps, { x: 0, y: 0, opacity: 1, duration: 0.6 }, 0);
+    tl.fromTo(left, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 0);
   }
 
   if (image) {
-    const scaleFrom = isMobile ? 0.9 : 0.85; // Scale moins agressif sur mobile
     tl.fromTo(
       image,
-      { opacity: 0, scale: scaleFrom },
+      { opacity: 0, scale: 0.85 },
       { opacity: 1, scale: 1, duration: 0.6 },
-      0.15
+      immediate ? 0 : 0.15
     );
   }
 
   if (right) {
-    const fromProps = isMobile
-      ? { x: 30, opacity: 0 } // Réduit le déplacement sur mobile
-      : { y: -60, opacity: 0 };
-    tl.fromTo(right, fromProps, { x: 0, y: 0, opacity: 1, duration: 0.6 }, 0.3);
+    tl.fromTo(
+      right,
+      { y: -60, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.6 },
+      immediate ? 0 : 0.3
+    );
   }
 }
 
-function hideStep(step: HTMLElement, isMobile: boolean): void {
-  const tl = gsap.timeline();
+function hideStep(step: HTMLElement): void {
+  const tl = gsap.timeline({
+    defaults: { ease: 'power2.in' },
+    immediateRender: false,
+  });
+
   const left = step.querySelector('.text-left, .xp_text-step:not(.is-right)');
   const image = step.querySelector('.image-center, .xp_img-col');
   const right = step.querySelector('.text-right, .xp_text-step.is-right');
 
   if (left) {
-    const toProps = isMobile
-      ? { x: -30, opacity: 0, duration: 0.3 } // Cohérent avec showStep
-      : { y: -60, opacity: 0, duration: 0.3 };
-    tl.to(left, toProps, 0);
+    tl.to(left, { y: -60, opacity: 0, duration: 0.3 }, 0);
   }
 
   if (image) {
-    const scaleTo = isMobile ? 0.9 : 0.85; // Cohérent avec showStep
-    tl.to(image, { opacity: 0, scale: scaleTo, duration: 0.3 }, 0.1);
+    tl.to(image, { opacity: 0, scale: 0.85, duration: 0.3 }, 0.1);
   }
 
   if (right) {
-    const toProps = isMobile
-      ? { x: 30, opacity: 0, duration: 0.3 } // Cohérent avec showStep
-      : { y: 60, opacity: 0, duration: 0.3 };
-    tl.to(right, toProps, 0.2);
+    tl.to(right, { y: 60, opacity: 0, duration: 0.3 }, 0.2);
   }
 
-  tl.to(step, { autoAlpha: 0, duration: 0.2 }, 0.2).set(step, { pointerEvents: 'none' });
+  tl.to(step, { autoAlpha: 0, duration: 0.2 }, 0.2).set(step, {
+    pointerEvents: 'none',
+  });
 }

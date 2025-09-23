@@ -127,6 +127,7 @@ export function swiperTestimonial() {
     direction: 'horizontal',
     slidesPerView: 'auto',
     spaceBetween: 48,
+    centeredSlides: true,
     speed: 800,
     effect: 'slide',
     loop: true,
