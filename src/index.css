@@ -197,3 +197,10 @@ h2 {
   align-items: center;
   justify-content: center;
 }
+
+/* Pour les très petits écrans (inférieurs à 480px) */
+@media (max-width: 480px) {
+  .animation-container .step {
+    bottom: 0;
+  }
+}
