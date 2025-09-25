@@ -152,13 +152,17 @@ export function swiperUnivers() {
   if (!swiperElement) {
     return;
   }
-  // Fading slider; pagination is halved to reflect unique CMS items
+
   new Swiper('.swiper.is-univers', {
     modules: [Navigation, Pagination, EffectFade],
     loop: true,
     speed: 800,
     slidesPerView: 'auto',
     spaceBetween: 0,
+    effect: 'fade',
+    fadeEffect: {
+      crossFade: true,
+    },
     navigation: {
       prevEl: '.swiper-button-prev.is-univers',
       nextEl: '.swiper-button-next.is-univers',
@@ -168,6 +172,23 @@ export function swiperUnivers() {
       type: 'custom',
       renderCustom: (swiper, current, total) =>
         renderHalvedBullets(swiper, current, total, 'swiper-bullet', 'is-active'),
+    },
+    breakpoints: {
+      // Desktop: effet fade
+      992: {
+        effect: 'fade',
+        fadeEffect: {
+          crossFade: true,
+        },
+        spaceBetween: 0,
+        centeredSlides: false,
+      },
+      // Mobile: effet slide
+      0: {
+        effect: 'slide',
+        spaceBetween: 48,
+        centeredSlides: true,
+      },
     },
   });
 }

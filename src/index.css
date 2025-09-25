@@ -202,9 +202,13 @@ h2 {
 }
 
 /* Pour les très petits écrans (inférieurs à 480px) */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .animation-container .step {
-    bottom: 1rem;
     top: auto;
+  }
+}
+@media (max-width: 480px) {
+  #test-anim-heading {
+    padding-top: 0.5rem !important;
   }
 }

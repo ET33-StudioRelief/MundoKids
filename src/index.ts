@@ -2,7 +2,7 @@ import './index.css';
 
 import { initAccordionToggle } from '$utils/accordion';
 import { initStepAnimation } from '$utils/animation';
-import { initGsapCardsAnimation, initIntroDecorativAnimation } from '$utils/gsap';
+import { initCardsContentAnimation, initIntroDecorativAnimation } from '$utils/gsap';
 import { svgComponent } from '$utils/svg';
 import { swiperInfo, swiperTestimonial, swiperUnivers, swiperZones } from '$utils/swiper';
 
@@ -19,7 +19,7 @@ window.Webflow.push(() => {
 
   if (window.location.pathname === '/') {
     initIntroDecorativAnimation();
-    initGsapCardsAnimation();
+    initCardsContentAnimation();
     swiperTestimonial();
     swiperZones();
   }
@@ -27,5 +27,6 @@ window.Webflow.push(() => {
   if (window.location.pathname === '/nos-activites') {
     initIntroDecorativAnimation();
     swiperUnivers();
+    initCardsContentAnimation();
   }
 });
