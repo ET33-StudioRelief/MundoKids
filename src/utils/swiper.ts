@@ -153,42 +153,72 @@ export function swiperUnivers() {
     return;
   }
 
-  new Swiper('.swiper.is-univers', {
-    modules: [Navigation, Pagination, EffectFade],
-    loop: true,
-    speed: 800,
-    slidesPerView: 'auto',
-    spaceBetween: 0,
-    effect: 'fade',
-    fadeEffect: {
-      crossFade: true,
-    },
-    navigation: {
-      prevEl: '.swiper-button-prev.is-univers',
-      nextEl: '.swiper-button-next.is-univers',
-    },
-    pagination: {
-      el: '.swiper-pagination.is-univers',
-      type: 'custom',
-      renderCustom: (swiper, current, total) =>
-        renderHalvedBullets(swiper, current, total, 'swiper-bullet', 'is-active'),
-    },
-    breakpoints: {
+  // Fonction pour détruire et recréer le swiper
+  let currentSwiper: Swiper | null = null;
+
+  const initSwiper = () => {
+    // Détruire l'instance existante
+    if (currentSwiper) {
+      currentSwiper.destroy(true, true);
+    }
+
+    const isMobile = window.innerWidth < 992;
+
+    if (isMobile) {
+      // Mobile: effet slide
+      currentSwiper = new Swiper('.swiper.is-univers', {
+        modules: [Navigation, Pagination],
+        loop: true,
+        speed: 800,
+        slidesPerView: 'auto',
+        spaceBetween: 48,
+        centeredSlides: true,
+        navigation: {
+          prevEl: '.swiper-button-prev.is-univers',
+          nextEl: '.swiper-button-next.is-univers',
+        },
+        pagination: {
+          el: '.swiper-pagination.is-univers',
+          type: 'custom',
+          renderCustom: (swiper, current, total) =>
+            renderHalvedBullets(swiper, current, total, 'swiper-bullet', 'is-active'),
+        },
+      });
+    } else {
       // Desktop: effet fade
-      992: {
+      currentSwiper = new Swiper('.swiper.is-univers', {
+        modules: [Navigation, Pagination, EffectFade],
+        loop: true,
+        speed: 800,
+        slidesPerView: 'auto',
+        spaceBetween: 0,
         effect: 'fade',
         fadeEffect: {
           crossFade: true,
         },
-        spaceBetween: 0,
-        centeredSlides: false,
-      },
-      // Mobile: effet slide
-      0: {
-        effect: 'slide',
-        spaceBetween: 48,
-        centeredSlides: true,
-      },
-    },
+        navigation: {
+          prevEl: '.swiper-button-prev.is-univers',
+          nextEl: '.swiper-button-next.is-univers',
+        },
+        pagination: {
+          el: '.swiper-pagination.is-univers',
+          type: 'custom',
+          renderCustom: (swiper, current, total) =>
+            renderHalvedBullets(swiper, current, total, 'swiper-bullet', 'is-active'),
+        },
+      });
+    }
+  };
+
+  // Initialiser au chargement
+  initSwiper();
+
+  // Reinitialiser au resize avec debounce
+  let resizeTimeout: number;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      initSwiper();
+    }, 250);
   });
 }
