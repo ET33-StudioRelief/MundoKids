@@ -8,14 +8,31 @@ export function initStepAnimation(): void {
   // Calcule et applique l'offset haut (pour ne pas chevaucher le heading)
   const heading = document.querySelector('#test-anim-heading') as HTMLElement | null;
   let lastOffsetValue = '';
+
+  // Fonction pour détecter si on est sur mobile
+  const isMobileDevice = (): boolean => {
+    return (
+      window.innerWidth <= 768 ||
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    );
+  };
+
   const setStepsTopOffset = (): void => {
     if (heading) {
-      const h = heading.getBoundingClientRect().height;
-      const offsetValue = `${Math.round(h)}px`;
-      // Éviter les appels multiples si la valeur n'a pas changé
-      if (offsetValue !== lastOffsetValue) {
-        container.style.setProperty('--steps-top-base', offsetValue);
-        lastOffsetValue = offsetValue;
+      const isMobile = isMobileDevice();
+
+      if (isMobile) {
+        // Sur mobile : pas d'offset (les steps prennent tout l'espace)
+        container.style.setProperty('--steps-top-base', '0px');
+      } else {
+        // Sur desktop : calculer l'offset selon la hauteur du heading
+        const h = heading.getBoundingClientRect().height;
+        const offsetValue = `${Math.round(h)}px`;
+        // Éviter les appels multiples si la valeur n'a pas changé
+        if (offsetValue !== lastOffsetValue) {
+          container.style.setProperty('--steps-top-base', offsetValue);
+          lastOffsetValue = offsetValue;
+        }
       }
     }
   };

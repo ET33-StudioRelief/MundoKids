@@ -1,55 +1,46 @@
 import { gsap, ScrollTrigger } from '$utils/gsapSetup';
 
-export function initGsapCardsAnimation() {
-  gsap.registerPlugin(ScrollTrigger);
+export function initCardsContentAnimation() {
+  const cardsContent = document.querySelector('.cards_content');
+  if (!cardsContent) return;
 
-  ScrollTrigger.matchMedia({
-    '(min-width: 769px)': () => {
-      const wrappers = document.querySelectorAll<HTMLElement>('.cards_wrapper');
-      wrappers.forEach((wrapper) => {
-        const cards = Array.from(wrapper.querySelectorAll<HTMLElement>('.cards_card'));
-        if (cards.length === 0) return;
+  const cardsWrapper = cardsContent.querySelector('.cards_wrapper');
+  if (!cardsWrapper) return;
 
-        // initial state
-        gsap.set(cards, { opacity: 0, y: 24 });
+  const cards = Array.from(cardsWrapper.querySelectorAll('.cards_card'));
+  if (cards.length === 0) return;
 
-        const play = () => {
-          gsap.fromTo(
-            cards,
-            { opacity: 0, y: 24 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.6,
-              ease: 'power2.out',
-              stagger: 0.3,
-              overwrite: 'auto',
-            }
-          );
-        };
+  // Initial state
+  gsap.set(cards, {
+    opacity: 0,
+    y: 50,
+    scale: 0.9,
+  });
 
-        // manual ScrollTrigger for restart animation
-        ScrollTrigger.create({
-          trigger: wrapper,
-          start: 'top 80%',
-          onEnter: () => {
-            play();
-          },
-          onEnterBack: () => {
-            play();
-          },
-          onLeave: () => {
-            gsap.set(cards, { opacity: 0, y: 24 });
-          },
-          onLeaveBack: () => {
-            gsap.set(cards, { opacity: 0, y: 24 });
-          },
-        });
+  ScrollTrigger.create({
+    trigger: cardsContent,
+    start: 'top 75%',
+    onEnter: () => {
+      gsap.to(cards, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.8,
+        ease: 'power2.out',
+        stagger: 0.2,
+        overwrite: 'auto',
       });
-
-      return () => {
-        // cleanup if necessary
-      };
+    },
+    onEnterBack: () => {
+      gsap.to(cards, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.8,
+        ease: 'power2.out',
+        stagger: 0.2,
+        overwrite: 'auto',
+      });
     },
   });
 }
