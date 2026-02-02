@@ -75,42 +75,42 @@ export function swiperInfo() {
 }
 
 export function swiperZones() {
-  // Guard: init only when the target slider exists on the page
   const swiperElement = document.querySelector('.swiper.is-zones');
+  if (!swiperElement) return;
 
-  if (!swiperElement) {
-    return;
-  }
-  // Looping slider with autoplay; pagination shows full count (not halved)
+  // Nav et pagination peuvent être dans un bloc frère (ex. .swiper_nav-content) : chercher dans le même conteneur
+  const container =
+    swiperElement.closest('.slider_content') ?? (swiperElement.parentElement as HTMLElement);
+  const prevEl = container?.querySelector('.swiper-button-prev.is-zones');
+  const nextEl = container?.querySelector('.swiper-button-next.is-zones');
+  const paginationEl = container?.querySelector('.swiper-pagination.is-zones');
+
   new Swiper('.swiper.is-zones', {
-    modules: [Autoplay, Navigation, Pagination],
+    modules: [Navigation, Pagination], // Autoplay commenté pour test
     direction: 'horizontal',
     slidesPerView: 'auto',
     spaceBetween: 48,
     loop: true,
-    effect: 'slide',
     speed: 800,
-    // Autoplay continues after user interaction
-    autoplay: { delay: 1000, disableOnInteraction: false },
-    // Next/Prev arrows
-    navigation: { prevEl: '.swiper-button-prev.is-zones', nextEl: '.swiper-button-next.is-zones' },
-    // Default bullets pagination (CMS duplicates are not halved here by design)
-    pagination: {
-      el: '.swiper-pagination.is-zones',
-      clickable: true,
-      bulletClass: 'swiper-bullet',
-      bulletActiveClass: 'is-active',
-      renderBullet: (_, c) => `<span class="${c}"></span>`,
-    },
+    // autoplay: {
+    //   delay: 0,
+    //   disableOnInteraction: false,
+    //   pauseOnMouseEnter: true,
+    // },
+    navigation:
+      prevEl && nextEl ? { prevEl: prevEl as HTMLElement, nextEl: nextEl as HTMLElement } : false,
+    pagination: paginationEl
+      ? {
+          el: paginationEl as HTMLElement,
+          clickable: true,
+          bulletClass: 'swiper-bullet',
+          bulletActiveClass: 'is-active',
+          renderBullet: (_: number, c: string) => `<span class="${c}"></span>`,
+        }
+      : false,
     breakpoints: {
-      // Tablet: group slides by 2 for faster navigation
-      768: {
-        slidesPerGroup: 2,
-      },
-      // Mobile: group by 1 (default granularity)
-      0: {
-        slidesPerGroup: 1,
-      },
+      768: { slidesPerGroup: 2 },
+      0: { slidesPerGroup: 1 },
     },
   });
 }

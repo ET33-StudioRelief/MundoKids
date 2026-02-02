@@ -163,3 +163,10 @@ h2 {
     padding-top: 0.5rem !important;
   }
 }
+
+/*
+! Swiper
+*/
+.swiper.is-zones .swiper-wrapper.is-zones {
+  transition-timing-function: linear !important;
+}
